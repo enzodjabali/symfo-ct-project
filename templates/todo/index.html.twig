@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todo list{% endblock %}
+
+{% block body %}
+    <h1>Todo list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Todo</th>
+                <th>By</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for todo in todos %}
+            {% if todo.isdone == false %}
+                <tr>
+                    <td>{{ todo.id }}</td>
+                    <td>{{ todo.todo }}</td>
+                    <td>{{ todo.by }}</td>
+                    <td>
+                    <a href="{{ path('app_todo_show', {'id': todo.id}) }}">show</a>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <a href="{{ path('app_todo_edit', {'id': todo.id}) }}">edit</a>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Done</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Todo</th>
+                <th>By</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for todo in todos %}
+            {% if todo.isdone %}
+                <tr>
+                    <td>{{ todo.id }}</td>
+                    <td>{{ todo.todo }}</td>
+                    <td>{{ todo.by }}</td>
+                    <td>
+                    <a href="{{ path('app_todo_show', {'id': todo.id}) }}">show</a>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <a href="{{ path('app_todo_edit', {'id': todo.id}) }}">edit</a>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        {% if is_granted("ROLE_ADMIN") %}
+            <a href="{{ path('app_todo_new') }}">Create new</a>
+        {% endif %}
+{% endblock %}

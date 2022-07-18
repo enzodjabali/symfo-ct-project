@@ -1,0 +1,4 @@
+{{ form_start(form, {'action': path('app_user_edit', {'id': '0'}), 'method': 'POST'}) }}    
+{{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User list{% endblock %}
+
+{% block body %}
+    <h1>User list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Roles</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+           
+            <tr>
+                <td>{{ user.id }}</td>
+                <td id="user-{{ user.id }}-username">{{ user.username }}</td>
+                <td id="user-{{ user.id }}-roles">
+                {% for role in user.roles %}
+                   <span class="badge text-bg-primary"> {{ role }} </span>
+                {% endfor %}
+                </td>
+                 <td>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#userEdit" data-id="{{ user.id }}">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+            
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="userEdit" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit user : </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              
+                {{ include('user/_form.html.twig') }}
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const userModalObject = new bootstrap.Modal(document.getElementById('userEdit'), {})
+        const userModal = document.getElementById('userEdit')
+        const formUserEdit = document.getElementsByName("user")[0];
+
+        userModal.addEventListener('show.bs.modal', event => {
+
+              const linkEdit = event.relatedTarget;
+              const userId = linkEdit.getAttribute('data-id');
+              console.log(userId);
+
+            const userName = document.getElementById("user-"+userId+"-username").textContent;
+            console.log(userName);
+            
+            document.getElementById("user_username").setAttribute('value', userName);
+
+            formUserEdit.action = "users/edit/"+userId;
+        })
+
+        formUserEdit.addEventListener('submit', (event) => {
+            event.preventDefault();
+            console.log('submit');
+            // TODO do something here to show user that form is being submitted
+            fetch(event.target.action, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: document.getElementById("user_username").value,
+                    roles: document.getElementById("user_roles").value
+                })
+            }).then((resp) => {
+                return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+                userModalObject.hide();
+            }).catch((error) => {
+               alert(error);
+            });
+        });
+
+    </script>
+{% endblock %}
+

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todo{% endblock %}
+
+{% block body %}
+    <h1>Todo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ todo.id }}</td>
+            </tr>
+            <tr>
+                <th>Todo</th>
+                <td>{{ todo.todo }}</td>
+            </tr>
+            <tr>
+                <th>By</th>
+                <td>{{ todo.by }}</td>
+            </tr>
+            <tr>
+                <th>Is Done</th>
+                <td>{{  todo.isdone ? 'True' : 'False' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_todo_index') }}">back to list</a>
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('app_todo_edit', {'id': todo.id}) }}">edit</a>
+        {{ include('todo/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}
