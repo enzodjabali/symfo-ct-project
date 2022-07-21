@@ -5,7 +5,7 @@
 {% block body %}
     <h1>User list</h1>
 
-    <table class="table">
+    <table class="table" id="users-table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -21,9 +21,7 @@
                 <td>{{ user.id }}</td>
                 <td id="user-{{ user.id }}-username">{{ user.username }}</td>
                 <td id="user-{{ user.id }}-roles">
-                {% for role in user.roles %}
-                   <span class="badge text-bg-primary"> {{ role }} </span>
-                {% endfor %}
+                <span class="badge text-bg-primary"> {{ user.roles[0] }} </span>
                 </td>
                  <td>
                     <a href="#" data-bs-toggle="modal" data-bs-target="#userEdit" data-id="{{ user.id }}">
@@ -45,9 +43,7 @@
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit user : </h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               
@@ -83,6 +79,10 @@
         formUserEdit.addEventListener('submit', (event) => {
             event.preventDefault();
             console.log('submit');
+
+            const userName = document.getElementById("user_username").value;
+            const role = document.getElementById("user_roles").value;
+
             // TODO do something here to show user that form is being submitted
             fetch(event.target.action, {
                 method: 'POST',
@@ -91,17 +91,26 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    username: document.getElementById("user_username").value,
-                    roles: document.getElementById("user_roles").value
+                    username: userName,
+                    roles: role
                 })
             }).then((resp) => {
                 return resp.json(); // or resp.text() or whatever the server sends
             }).then((body) => {
+                const userId = /[^/]*$/.exec(formUserEdit.action)[0];
+                console.log(userId);
+
+                refreshTable(userId, userName, role);
                 userModalObject.hide();
             }).catch((error) => {
                alert(error);
             });
         });
+
+        function refreshTable(userId, userName, role) {
+            document.getElementById("user-"+userId+"-username").innerHTML = userName;
+            document.getElementById("user-"+userId+"-roles").innerHTML = "<span class='badge text-bg-primary'>"+role+"</span>";
+        }
 
     </script>
 {% endblock %}

@@ -3,36 +3,43 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 class UserType extends AbstractType
 {
 
-    private RoleHierarchyInterface $roleHierarchyInterface;
+    private ContainerBagInterface $containerBagInterface;
 
-    public function __construct(RoleHierarchyInterface $roleHierarchyInterface)
+    public function __construct(ContainerBagInterface $containerBagInterface)
     {
-        
-        $this->roleHierarchyInterface = $roleHierarchyInterface;
-        // dd($roleHierarchyInterface);
+        $this->containerBagInterface = $containerBagInterface;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $hierarchy = $this->containerBagInterface->get('security.role_hierarchy.roles');
+        // dd(array_keys($hierarchy));
+        $roles = [];
+
+        foreach ($hierarchy as $arrayRole)
+        {
+     
+            $roles[$arrayRole[0]] = $arrayRole[0];
+        }
+        // array_walk_recursive($hierarchy, function($role) use (&$roles)
+        // {
+        //     $roles[$role] = $role;
+        // });
+
         $builder
             ->add('username')
             ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'ROLE_USER' => "ROLE_USER",
-                    'ROLE_ADMIN' => "ROLE_ADMIN",
-                    'ROLE_SUPER_ADMIN' => "ROLE_SUPER_ADMIN",
-                ],
-                
+                'choices' => $roles
             ])
         ;
 

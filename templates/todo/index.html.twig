@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Todo</th>
                 <th>By</th>
-                <th>actions</th>
+                <th class="text-end">actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,11 +21,12 @@
                     <td>{{ todo.id }}</td>
                     <td>{{ todo.todo }}</td>
                     <td>{{ todo.by }}</td>
-                    <td>
-                    <a href="{{ path('app_todo_show', {'id': todo.id}) }}">show</a>
-                    {% if is_granted("ROLE_ADMIN") %}
-                        <a href="{{ path('app_todo_edit', {'id': todo.id}) }}">edit</a>
-                    {% endif %}
+                    <td class="text-end">
+                        <a class="me-3" href="{{ path('app_todo_show', {'id': todo.id}) }}" title="Show"><i stu class="bi bi-eye-fill"></i></a>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a class="me-3" href="{{ path('app_todo_edit', {'id': todo.id}) }}" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+                            {{ include('todo/_delete_form.html.twig') }}
+                        {% endif %}
                     </td>
                 </tr>
             {% endif %}
@@ -44,7 +45,7 @@
                 <th>Id</th>
                 <th>Todo</th>
                 <th>By</th>
-                <th>actions</th>
+                <th class="text-end">actions</th>
             </tr>
         </thead>
         <tbody>
@@ -54,11 +55,12 @@
                     <td>{{ todo.id }}</td>
                     <td>{{ todo.todo }}</td>
                     <td>{{ todo.by }}</td>
-                    <td>
-                    <a href="{{ path('app_todo_show', {'id': todo.id}) }}">show</a>
-                    {% if is_granted("ROLE_ADMIN") %}
-                        <a href="{{ path('app_todo_edit', {'id': todo.id}) }}">edit</a>
-                    {% endif %}
+                    <td class="text-end">
+                        <a class="me-3" href="{{ path('app_todo_show', {'id': todo.id}) }}"><i class="bi bi-eye-fill"></i></a>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a class="me-3" href="{{ path('app_todo_edit', {'id': todo.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                            {{ include('todo/_delete_form.html.twig') }}
+                        {% endif %}
                     </td>
                 </tr>
             {% endif %}
@@ -71,6 +73,6 @@
     </table>
 
         {% if is_granted("ROLE_ADMIN") %}
-            <a href="{{ path('app_todo_new') }}">Create new</a>
+            <a class="btn btn-success" style="position: fixed;bottom: 20px;left: 20px;" href="{{ path('app_todo_new') }}">Create new</a>
         {% endif %}
 {% endblock %}

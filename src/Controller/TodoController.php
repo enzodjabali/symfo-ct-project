@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Todo;
 use App\Form\TodoType;
 use App\Repository\TodoRepository;
+use App\Service\MailerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,11 +23,9 @@ class TodoController extends AbstractController
         ]);
     }
 
-    
-
     #[Route('/new', name: 'app_todo_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
-    public function new(Request $request, TodoRepository $todoRepository): Response
+    public function new(Request $request, TodoRepository $todoRepository, MailerService $mailer): Response
     {
         $todo = new Todo();
         $form = $this->createForm(TodoType::class, $todo);
@@ -34,6 +33,23 @@ class TodoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $todoRepository->add($todo, true);
+
+            // Send email
+            $subject = 'New task added';
+            $content = 'Hi, a new task has been added in your todo list.';
+            $mailer->sendEmail(
+                from: 'sender@myapp.lan',
+                to: 'receiver@myapp.lan',
+                subject: $subject,
+                htmlTemplate: 'email/todo/new.html.twig',
+                
+                // Context
+                todoTodo: $todo->getTodo(),
+                todoUserName: $todo->getBy(),
+                todoCurrentUserName: $this->getUser()->getUsername()
+            );
+            // dd($mailer->sendEmail(subject: $subject, content: $content));
+
 
             return $this->redirectToRoute('app_todo_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -61,7 +77,6 @@ class TodoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $todoRepository->add($todo, true);
-
             return $this->redirectToRoute('app_todo_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -71,7 +86,7 @@ class TodoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_todo_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_todo_delete', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Todo $todo, TodoRepository $todoRepository): Response
     {
