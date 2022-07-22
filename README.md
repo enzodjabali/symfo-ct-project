@@ -7,6 +7,10 @@ Add user to docker group (if not already added):
 ```bash
 sudo usermod -aG docker $USER
 ```
+
+sudo chmod 666 /var/run/docker.sock
+
+
 Create a symbolic link to /usr/bin:
 ```
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
