@@ -2,7 +2,7 @@ version: '3.7'
 services:
     php8-sf6:
         container_name: php8-sf6
-        build: .
+        build: ./docker
         ports:
             - "9000:8000"
         volumes:
