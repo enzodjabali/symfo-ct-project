@@ -1,11 +1,20 @@
-Install docker:
+Install docker and docker-compose:
 ```bash
-apt install docker
+sudo apt install docker -y && sudo apt install docker -y
 ```
 
-Install docker-compose:
+Add user to docker group (if not already added):
 ```bash
-apt install docker
+sudo usermod -aG docker $USER
+```
+Create a symbolic link to /usr/bin:
+```
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+```
+
+Restart docker service
+```bash
+sudo service docker restart
 ```
 
 Clone the project:
