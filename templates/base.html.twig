@@ -41,7 +41,7 @@
                 </ul>
                 
                     {% if app.user %}
-                        <span class="navbar-text" style="margin-right:15px;">Connected as : {{ app.user.username }}</span>
+                        <span class="navbar-text" style="margin-right:15px;">Connected as : {{ app.user.email }}</span>
                         <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                     {% else %}
                         <a class="nav-link" href="{{ path('app_login') }}">Login</a>

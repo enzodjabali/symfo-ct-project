@@ -37,7 +37,7 @@ class UserType extends AbstractType
         // });
 
         $builder
-            ->add('username')
+            ->add('email')
             ->add('roles', ChoiceType::class, [
                 'choices' => $roles
             ])

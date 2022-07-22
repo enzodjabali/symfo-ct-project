@@ -17,8 +17,8 @@ class MailerService
 
         // TodoController
         string $todoTodo = '',
-        string $todoUserName = '',
-        string $todoCurrentUserName = '',
+        string $todoEmail = '',
+        string $todoCurrentEmail = '',
 
         // ContactController
         string $contactEmail = '',
@@ -40,8 +40,8 @@ class MailerService
             ->context([
                 // TodoController
                 'todoTodo' => $todoTodo,
-                'todoUserName' => $todoUserName,
-                'todoCurrentUserName' => $todoCurrentUserName,
+                'todoEmail' => $todoEmail,
+                'todoCurrentEmail' => $todoCurrentEmail,
 
                 // ContactController
                 'contactEmail' => $contactEmail,

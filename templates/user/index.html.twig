@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Username</th>
+                <th>Email</th>
                 <th>Roles</th>
                 <th>Edit</th>
             </tr>
@@ -19,7 +19,7 @@
            
             <tr>
                 <td>{{ user.id }}</td>
-                <td id="user-{{ user.id }}-username">{{ user.username }}</td>
+                <td id="user-{{ user.id }}-email">{{ user.email }}</td>
                 <td id="user-{{ user.id }}-roles">
                 <span class="badge text-bg-primary"> {{ user.roles[0] }} </span>
                 </td>
@@ -64,15 +64,11 @@
 
         userModal.addEventListener('show.bs.modal', event => {
 
-              const linkEdit = event.relatedTarget;
-              const userId = linkEdit.getAttribute('data-id');
-              console.log(userId);
-
-            const userName = document.getElementById("user-"+userId+"-username").textContent;
-            console.log(userName);
+            const linkEdit = event.relatedTarget;
+            const userId = linkEdit.getAttribute('data-id');
+            const email = document.getElementById("user-"+userId+"-email").textContent;
             
-            document.getElementById("user_username").setAttribute('value', userName);
-
+            document.getElementById("user_email").setAttribute('value', email);
             formUserEdit.action = "users/edit/"+userId;
         })
 
@@ -80,7 +76,7 @@
             event.preventDefault();
             console.log('submit');
 
-            const userName = document.getElementById("user_username").value;
+            const email = document.getElementById("user_email").value;
             const role = document.getElementById("user_roles").value;
 
             // TODO do something here to show user that form is being submitted
@@ -91,7 +87,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    username: userName,
+                    email: email,
                     roles: role
                 })
             }).then((resp) => {
@@ -100,15 +96,15 @@
                 const userId = /[^/]*$/.exec(formUserEdit.action)[0];
                 console.log(userId);
 
-                refreshTable(userId, userName, role);
+                refreshTable(userId, email, role);
                 userModalObject.hide();
             }).catch((error) => {
                alert(error);
             });
         });
 
-        function refreshTable(userId, userName, role) {
-            document.getElementById("user-"+userId+"-username").innerHTML = userName;
+        function refreshTable(userId, email, role) {
+            document.getElementById("user-"+userId+"-email").innerHTML = email;
             document.getElementById("user-"+userId+"-roles").innerHTML = "<span class='badge text-bg-primary'>"+role+"</span>";
         }
 

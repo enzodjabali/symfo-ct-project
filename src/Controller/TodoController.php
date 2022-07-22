@@ -45,8 +45,8 @@ class TodoController extends AbstractController
                 
                 // Context
                 todoTodo: $todo->getTodo(),
-                todoUserName: $todo->getBy(),
-                todoCurrentUserName: $this->getUser()->getUsername()
+                todoEmail: $todo->getBy(),
+                todoCurrentEmail: $this->getUser()->getEmail()
             );
             // dd($mailer->sendEmail(subject: $subject, content: $content));
 
