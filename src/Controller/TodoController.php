@@ -38,7 +38,7 @@ class TodoController extends AbstractController
             $subject = 'New task added';
             $content = 'Hi, a new task has been added in your todo list.';
             $mailer->sendEmail(
-                from: 'sender@myapp.lan',
+                from: 'sender@myapp.lann',
                 to: 'receiver@myapp.lan',
                 subject: $subject,
                 htmlTemplate: 'email/todo/new.html.twig',
