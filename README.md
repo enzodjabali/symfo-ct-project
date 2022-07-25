@@ -31,7 +31,7 @@ Create a symbolic link to /usr/bin:
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 ```
 
-Restart docker service
+Restart docker service:
 ```bash
 sudo service docker restart
 ```
