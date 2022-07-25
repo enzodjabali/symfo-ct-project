@@ -21,8 +21,10 @@ Add user to docker group (if not already added):
 sudo usermod -aG docker $USER
 ```
 
+Grant docker sock permission?
+```bash
 sudo chmod 666 /var/run/docker.sock
-
+```
 
 Create a symbolic link to /usr/bin:
 ```
