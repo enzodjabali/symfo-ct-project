@@ -7,6 +7,14 @@
 
 # symfo-ct-project
 
+_**Instant lightning-fast GraphQL API backed primarily by your PostgreSQL database. Highly customisable and extensible thanks to incredibly powerful plugin system.**_ _Formerly "PostGraphQL"._
+
+## Documentation: [graphile.org/postgraphile](https://graphile.org/postgraphile)
+
+<!-- SPONSORS_BEGIN -->
+
+## Crowd-funded open-source software
+
 Install docker and docker-compose:
 ```bash
 sudo apt install docker -y && sudo apt install docker -y
