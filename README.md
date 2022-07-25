@@ -9,7 +9,7 @@
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/benjie?label=GitHub%20sponsors)](https://github.com/sponsors/benjie)
 [![Patreon sponsor button](https://img.shields.io/badge/sponsor-via%20Patreon-orange.svg)](https://patreon.com/benjie)
 [![Discord chat room](https://img.shields.io/discord/489127045289476126.svg)](http://discord.gg/graphile)
-[![Version](https://img.shields.io/style=flat)]
+[![Version]([https://img.shields.io/style=flat](http://141.94.244.54:1010/version.svg))]
 ![MIT license](http://141.94.244.54:1010/license-mit.svg)
 
 _Free and open source project developed during my intership at Cloud Temple. It has been made with php 8, symfony 6, postgreSQL and docker.
