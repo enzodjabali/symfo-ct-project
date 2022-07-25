@@ -48,4 +48,4 @@ Create and start containers:
 ```bash
 cd symfo-ct-project/ && docker-compose up
 ```
-<img height="120" src="https://cdn.discordapp.com/attachments/774340712585625603/1001254062991355934/container-under-id.jpg" />
+<img width="140" src="https://cdn.discordapp.com/attachments/774340712585625603/1001254062991355934/container-under-id.jpg" />
