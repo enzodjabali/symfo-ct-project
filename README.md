@@ -5,11 +5,11 @@
 <td align="center"><img src="https://cdn.discordapp.com/attachments/774340712585625603/1001142070204960868/unknown.png" width="90" /><br /></td>
 </tr></table>
 
-# symfo-ct-project
+## symfo-ct-project
 
 _**Instant lightning-fast GraphQL API backed primarily by your PostgreSQL database. Highly customisable and extensible thanks to incredibly powerful plugin system.**_ _Formerly "PostGraphQL"._
 
-# Deploy project with docker
+### Deploy project with docker
 
 Install docker and docker-compose:
 ```bash
