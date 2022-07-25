@@ -51,7 +51,24 @@ cd symfo-ct-project/ && docker-compose up
 
 Get id of symfony container:
 ```bash
-cd symfo-ct-project/ && docker-compose up
+docker ps
 ```
 
 <img width="550" src="https://cdn.discordapp.com/attachments/774340712585625603/1001254062991355934/container-under-id.jpg" />
+
+
+Connect to container:
+```bash
+docker exec -it f8ff4b2bdac5 /bin/bash
+```
+
+
+Install dependencies with composer:
+```bash
+composer install
+```
+
+run symfony server (add `-d` to run it in background):
+```bash
+symfony server:start
+```
