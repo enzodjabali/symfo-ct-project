@@ -12,7 +12,7 @@
 [![Version](https://img.shields.io/style=flat)]
 ![MIT license](https://img.shields.io/npm/l/postgraphile.svg)
 
-_Free and open source project developed during my intership at Cloud Temple. It's developed with php 8, symfony 6, postgreSQL and docker.
+_Free and open source project developed during my intership at Cloud Temple. It has been made with php 8, symfony 6, postgreSQL and docker.
 Please, feel free to clone it and use it as your wish!_
 
 ## Deploy project with docker 🐳
