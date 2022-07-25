@@ -9,11 +9,7 @@
 
 _**Instant lightning-fast GraphQL API backed primarily by your PostgreSQL database. Highly customisable and extensible thanks to incredibly powerful plugin system.**_ _Formerly "PostGraphQL"._
 
-## Documentation: [graphile.org/postgraphile](https://graphile.org/postgraphile)
-
-<!-- SPONSORS_BEGIN -->
-
-## Crowd-funded open-source software
+## Deploy project with Docker:
 
 Install docker and docker-compose:
 ```bash
