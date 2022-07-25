@@ -1,6 +1,6 @@
 
 <table><tr>
-<td align="center"><a href="https://www.enzuzo.com/"><img src="https://graphile.org/images/sponsors/enzuzo.png" width="90" height="90" alt="Enzuzo" /><br />Enzuzo</a> *</td>
+<td align="center"><img src="https://graphile.org/images/sponsors/enzuzo.png](https://discord.com/channels/774340712585625600/774340712585625603/999962830881177680" width="90" /><br /></td>
 <td align="center"><a href="https://politicsrewired.com/"><img src="https://graphile.org/images/sponsors/politics-rewired.png" width="90" height="90" alt="Politics Rewired" /><br />Politics Rewired</a></td>
 <td align="center"><a href="https://iasql.com/"><img src="https://graphile.org/images/sponsors/IaSQL.png" width="90" height="90" alt="IaSQL" /><br />IaSQL</a></td>
 </tr></table>
