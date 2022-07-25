@@ -12,8 +12,8 @@
 [![Version](https://img.shields.io/style=flat)]
 ![MIT license](https://img.shields.io/npm/l/postgraphile.svg)
 
-_**Free and open source project developed during my intership at Cloud Temple. It's developed with php 8, symfony 6, postgreSQL and docker.
-Please, feel free to clone it and use it as your wish! 👨‍💻 **_ _Formerly "PostGraphQL"._
+_Free and open source project developed during my intership at Cloud Temple. It's developed with php 8, symfony 6, postgreSQL and docker.
+Please, feel free to clone it and use it as your wish!_
 
 ## Deploy project with docker 🐳
 
