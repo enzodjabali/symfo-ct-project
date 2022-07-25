@@ -9,7 +9,7 @@
 
 _**Instant lightning-fast GraphQL API backed primarily by your PostgreSQL database. Highly customisable and extensible thanks to incredibly powerful plugin system.**_ _Formerly "PostGraphQL"._
 
-## Deploy project with Docker:
+# Deploy project with docker
 
 Install docker and docker-compose:
 ```bash
@@ -21,7 +21,7 @@ Add user to docker group (if not already added):
 sudo usermod -aG docker $USER
 ```
 
-Grant docker sock permission?
+Grant docker sock permission:
 ```bash
 sudo chmod 666 /var/run/docker.sock
 ```
