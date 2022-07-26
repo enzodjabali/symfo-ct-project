@@ -41,6 +41,7 @@ class UserType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'choices' => $roles
             ])
+            ->add('verified')
         ;
 
         // Data transformer

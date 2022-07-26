@@ -23,7 +23,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
 
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $userRepository->findBy([], ['id' => 'ASC']),
             'form' => $form->createView(),
         ]);
     }
