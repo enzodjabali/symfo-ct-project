@@ -62,10 +62,19 @@ Connect to container:
 docker exec -it f8ff4b2bdac5 /bin/bash
 ```
 
-
 Install dependencies with composer:
 ```bash
 composer install
+
+```
+Create database:
+```bash
+symfony console d:d:c
+```
+
+Migrate database:
+```bash
+symfony console d:m:m
 ```
 
 run symfony server (add `-d` to run it in background):
