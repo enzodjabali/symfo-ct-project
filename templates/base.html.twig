@@ -17,7 +17,6 @@
         {% endblock %}
     </head>
     <body>
-
         <nav class="navbar navbar-expand-lg bg-light mb-5">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">My App</a>
@@ -55,5 +54,12 @@
         {% block body %}
         {% endblock %}
         </div>
+
+        <footer class="footer py-2 bg-light w-100 fixed-bottom">
+            <div class="container">
+            <span class="text-dark">{{ get_env("APP_NAME") }} v{{ get_env("APP_VERSION") }} {{ get_env("APP_ENV") }} ❤️</span>
+            </div>
+        </footer>
+        
     </body>
 </html>
