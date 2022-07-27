@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\UserService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -17,13 +18,13 @@ class UserController extends AbstractController
 {
     #[Route('', name: 'app_user_index')]
     #[IsGranted('ROLE_SUPER_ADMIN')]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserService $userService): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findBy([], ['id' => 'ASC']),
+            'users' => $userService->getPaginatedUsers(15),
             'form' => $form->createView(),
         ]);
     }
@@ -34,7 +35,7 @@ class UserController extends AbstractController
     {
         $user = $userRepository->find($id);
         assert($user instanceof User);
-        
+
         $form = $this->createForm(UserType::class, $user);
 
         $formContent = $request->getContent();
