@@ -47,7 +47,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         return new Passport(
             // without verified mention : new UserBadge($email),
-            new UserBadge($email, function($email) {
+            new UserBadge($email, function(string $email) {
                 $user = $this->userRepository->findOneBy(['email' => $email, 'verified' => true]);
 
                 if (!$user) {

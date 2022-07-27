@@ -22,13 +22,6 @@ class Todo
     #[ORM\Column(type: 'boolean', nullable: false)]
     private bool $isdone;
 
-    public function __construct(?int $id, ?string $todo, ?string $by, ?bool $isdone) {
-        $this->id = $id;
-        $this->todo = $todo;
-        $this->by = $by;
-        $this->isdone = $isdone;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
