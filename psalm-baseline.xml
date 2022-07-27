@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
+  <file src="src/DataFixtures/UserFixtures.php">
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>UserFixtures</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Entity/Todo.php">
+    <MissingConstructor occurrences="4">
+      <code>$by</code>
+      <code>$id</code>
+      <code>$isdone</code>
+      <code>$todo</code>
+    </MissingConstructor>
+  </file>
+  <file src="src/Entity/User.php">
+    <MissingPropertyType occurrences="4">
+      <code>$email</code>
+      <code>$id</code>
+      <code>$password</code>
+      <code>$roles</code>
+    </MissingPropertyType>
+    <MissingReturnType occurrences="1">
+      <code>eraseCredentials</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="1">
+      <code>$roles</code>
+    </MixedArgument>
+    <MixedArrayAssignment occurrences="1">
+      <code>$roles[]</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="1">
+      <code>$roles</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="3">
+      <code>?int</code>
+      <code>?string</code>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="3">
+      <code>$this-&gt;email</code>
+      <code>$this-&gt;id</code>
+      <code>$this-&gt;password</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Repository/TodoRepository.php">
+    <LessSpecificImplementedReturnType occurrences="2">
+      <code>Todo[]</code>
+      <code>Todo[]</code>
+    </LessSpecificImplementedReturnType>
+  </file>
+  <file src="src/Repository/UserRepository.php">
+    <LessSpecificImplementedReturnType occurrences="2">
+      <code>User[]</code>
+      <code>User[]</code>
+    </LessSpecificImplementedReturnType>
+  </file>
+</files>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Todo;
+use App\Entity\User;
 use App\Form\TodoType;
 use App\Repository\TodoRepository;
 use App\Service\MailerService;
@@ -34,9 +35,20 @@ class TodoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $todoRepository->add($todo, true);
 
+            $todoTodo = $todo->getTodo();
+            assert(is_string($todoTodo));
+
+            $todoEmail = $todo->getBy();
+            assert(is_string($todoEmail));
+
+            $currentUser = $this->getUser();
+            assert($currentUser instanceof User);
+
+            $todoCurrentEmail = $currentUser->getEmail();
+            assert(is_string($todoCurrentEmail));
+
             // Send email
             $subject = 'New task added';
-            $content = 'Hi, a new task has been added in your todo list.';
             $mailer->sendEmail(
                 from: 'sender@myapp.lan',
                 to: 'receiver@myapp.lan',
@@ -44,12 +56,10 @@ class TodoController extends AbstractController
                 htmlTemplate: 'email/todo/new.html.twig',
                 
                 // Context
-                todoTodo: $todo->getTodo(),
-                todoEmail: $todo->getBy(),
-                todoCurrentEmail: $this->getUser()->getEmail()
+                todoTodo: $todoTodo,
+                todoEmail: $todoEmail,
+                todoCurrentEmail: $todoCurrentEmail
             );
-            // dd($mailer->sendEmail(subject: $subject, content: $content));
-
 
             return $this->redirectToRoute('app_todo_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -90,7 +100,13 @@ class TodoController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Todo $todo, TodoRepository $todoRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$todo->getId(), $request->request->get('_token'))) {
+        $todoId = $todo->getId();
+        assert(is_int($todoId));
+
+        $todoToken = $request->request->get('_token');
+        assert(is_string($todoToken));
+
+        if ($this->isCsrfTokenValid('delete'.$todoId, $todoToken)) {
             $todoRepository->remove($todo, true);
         }
 

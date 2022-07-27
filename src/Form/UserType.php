@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UserType extends AbstractType
 {
-
     private ContainerBagInterface $containerBagInterface;
 
     public function __construct(ContainerBagInterface $containerBagInterface)
@@ -23,42 +22,41 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $hierarchy = $this->containerBagInterface->get('security.role_hierarchy.roles');
-        // dd(array_keys($hierarchy));
+        assert(is_array($hierarchy));
+
         $roles = [];
 
         foreach ($hierarchy as $arrayRole)
         {
-     
-            $roles[$arrayRole[0]] = $arrayRole[0];
+            assert(is_array($arrayRole));
+            
+            $mainRole = $arrayRole[0];
+            assert(is_string($mainRole));
+            
+            $roles[$mainRole] = $mainRole;
         }
-        // array_walk_recursive($hierarchy, function($role) use (&$roles)
-        // {
-        //     $roles[$role] = $role;
-        // });
 
         $builder
             ->add('email')
             ->add('roles', ChoiceType::class, [
                 'choices' => $roles
             ])
+            ->add('verified')
         ;
 
         // Data transformer
         $builder->get('roles')
             ->addModelTransformer(new CallbackTransformer(
-                function ($rolesArray) {
+                function (array $rolesArray) {
                      // transform the array to a string
                      return count($rolesArray)? $rolesArray[0]: null;
                 },
-                function ($rolesString) {
+                function (string $rolesString) {
                      // transform the string back to an array
                      return [$rolesString];
                 }
         ));
- 
     }
-
-    
 
     public function configureOptions(OptionsResolver $resolver): void
     {
