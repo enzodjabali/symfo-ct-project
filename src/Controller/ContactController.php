@@ -18,6 +18,12 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $contactEmail = $form->get('email')->getData();
+            assert(is_string($contactEmail));
+
+            $contactMessage = $form->get('message')->getData();
+            assert(is_string($contactMessage));
+
             // Send email
             $subject = 'Someone has reached you';
             $mailer->sendEmail(
@@ -27,8 +33,8 @@ class ContactController extends AbstractController
                 htmlTemplate: 'email/contact/index.html.twig',
                 
                 // Context
-                contactEmail: $form->get('email')->getData(),
-                contactMessage: $form->get('message')->getData()
+                contactEmail: $contactEmail,
+                contactMessage: $contactMessage
             );
 
             $this->addFlash(

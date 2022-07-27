@@ -33,9 +33,16 @@ class UserController extends AbstractController
     public function edit(int $id, Request $request, UserRepository $userRepository): JsonResponse
     {
         $user = $userRepository->find($id);
+        assert($user instanceof User);
+        
         $form = $this->createForm(UserType::class, $user);
 
-        $requestContent = json_decode($request->getContent(), true) ?? [];
+        $formContent = $request->getContent();
+        assert(is_string($formContent));
+
+        $requestContent = json_decode($formContent, true) ?? [];
+        assert(is_array($requestContent));
+
         $form->submit($requestContent);
 
         if ($form->isSubmitted() && $form->isValid()) {
