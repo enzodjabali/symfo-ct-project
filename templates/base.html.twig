@@ -26,22 +26,22 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                    <a {% if app.request.get('_route') == "app_todo_index" %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ path('app_todo_index') }}">Todo</a>
+                    <a {% if app.request.get('_route') == "app_todo_index" %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ path('app_todo_index') }}">Todo <i class="bi bi-list-task"></i></a>
                     </li>
                     <li class="nav-item">
-                    <a {% if app.request.get('_route') == "app_user_index" %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ path('app_user_index') }}">Users</a>
+                    <a {% if app.request.get('_route') == "app_user_index" %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ path('app_user_index') }}">Users <i class="bi bi-people-fill"></i></a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#">Articles</a>
+                    <a class="nav-link" href="#">Articles <i class="bi bi-newspaper"></i></a>
                     </li>
                     <li class="nav-item">
-                    <a {% if app.request.get('_route') == "app_contact" %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ path('app_contact') }}">Contact</a>
+                    <a {% if app.request.get('_route') == "app_contact" %} class="nav-link active" {% else %} class="nav-link" {% endif %} href="{{ path('app_contact') }}">Contact <i class="bi bi-chat-left-fill"></i></a>
                     </li>
                 </ul>
                 
                     {% if app.user %}
                         <span class="navbar-text" style="margin-right:15px;">Connected as : {{ app.user.email }}</span>
-                        <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                        <a class="nav-link" href="{{ path('app_logout') }}">Logout <i class="bi bi-box-arrow-right"></i></a>
                     {% else %}
                         <a class="nav-link" href="{{ path('app_login') }}">Login</a>
                     {% endif %}
