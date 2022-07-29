@@ -5,37 +5,33 @@
 {% block body %}
     <h1>Article index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Publication_date</th>
-                <th>User_id</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="row mb-2">
         {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.title }}</td>
-                <td>{{ article.description }}</td>
-                <td>{{ article.publicationDate ? article.publicationDate|date('Y-m-d') : '' }}</td>
-                <td>{{ article.userId }}</td>
-                <td>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="col-md-6">
+                <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                    <div class="card-body d-flex flex-column align-items-start">
 
+                    {% if article.category == 'Event' %}
+                        <strong class="d-inline-block mb-2 text-primary">Event</strong>
+                    {% else %}
+                        <strong class="d-inline-block mb-2 text-success">News</strong>
+                    {% endif %}
+
+                    <h3 class="mb-0">
+                        <a class="text-dark text-decoration-none" href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.title }}</a>
+                    </h3>
+                    <div class="mb-1 text-muted">{{ article.publicationDate ? article.publicationDate|date('d/m/Y') : '' }}</div>
+                    <p class="card-text mb-auto text-wrap" style="width: 23rem;">{{ article.shortdescription }}...</p>
+                    <a href="{{ path('app_article_show', {'id': article.id}) }}">Continue reading</a>
+                    <a class="btn btn-primary btn-sm" href="{{ path('app_article_edit', {'id': article.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                    </div>
+                        <div class="card-img-right flex-auto d-none d-md-block" style="width: 200px; height: 250px; background: url('{{ vich_uploader_asset(article, 'imageFile') }}') no-repeat center;background-size: cover;">
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>no records found</p>
+        {% endfor %}
+    </div>
     <a href="{{ path('app_article_new') }}">Create new</a>
 {% endblock %}

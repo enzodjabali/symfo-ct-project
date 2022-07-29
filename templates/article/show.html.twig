@@ -3,34 +3,19 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
+    <h1 class="mb-3">{{ article.title }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ article.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ article.description }}</td>
-            </tr>
-            <tr>
-                <th>Publication_date</th>
-                <td>{{ article.publicationDate ? article.publicationDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>User_id</th>
-                <td>{{ article.userId }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <img style="width: 30%;" class="mb-2" src="{{ vich_uploader_asset(article, 'imageFile') }}">
 
-    <a href="{{ path('app_article_index') }}">back to list</a>
+    <p><i class="bi bi-calendar"></i> {{ article.publicationDate ? article.publicationDate|date('d/m/Y') : '' }}</p>
+
+    <hr>
+
+    <pre class="fs-6">{{ article.description }}</pre>
+
+    <hr>
+
+    <a class="btn btn-primary" href="{{ path('app_article_index') }}"><i class="bi bi-arrow-left-square-fill me-1"></i> back to list</a>
 
     <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
 

@@ -25,10 +25,12 @@ class UserFixtures extends Fixture
         $faker = Factory::create('fr_FR');
         assert($faker instanceof Generator);
 
-        assert(method_exists($faker, 'email'));
+        // dd($faker, 'email');
+
+        // assert(is_null($faker) || method_exists($faker, 'email'));
 
         $user = (new User())
-            ->setEmail('enzo@dev.lan')
+            ->setEmail('admin@dev.lan')
             ->setRoles(['ROLE_SUPER_ADMIN']);
 
         $hashedPassword = $this->passwordHasher->hashPassword($user, self::PASSWORD);

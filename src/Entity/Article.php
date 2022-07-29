@@ -15,13 +15,16 @@ class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
-    #[ORM\Column(type: 'string', length: 80)]
-    private $title;
+    #[ORM\Column(type: 'string', length: 22)]
+    private string $title;
+
+    #[ORM\Column(type: 'text', length: 120)]
+    private string $shortdescription;
 
     #[ORM\Column(type: 'text')]
-    private $description;
+    private string $description;
 
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
     #[UploadableField(mapping: 'article_images', fileNameProperty: 'imageName')]
@@ -31,10 +34,16 @@ class Article
     private ?string $imageName = null;
 
     #[ORM\Column(type: 'date')]
-    private $publication_date;
+    private ?\DateTimeInterface $publicationDate;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $updatedDate;
 
     #[ORM\Column(type: 'integer')]
-    private $user_id;
+    private int $userId;
+
+    #[ORM\Column(type: 'string', length: 10)]
+    private string $category;
 
     public function getId(): ?int
     {
@@ -49,6 +58,18 @@ class Article
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getShortdescription(): ?string
+    {
+        return $this->shortdescription;
+    }
+
+    public function setShortdescription(string $shortdescription): self
+    {
+        $this->shortdescription = $shortdescription;
 
         return $this;
     }
@@ -87,24 +108,48 @@ class Article
 
     public function getPublicationDate(): ?\DateTimeInterface
     {
-        return $this->publication_date;
+        return $this->publicationDate;
     }
 
-    public function setPublicationDate(\DateTimeInterface $publication_date): self
+    public function setPublicationDate(\DateTimeInterface $publicationDate): self
     {
-        $this->publication_date = $publication_date;
+        $this->publicationDate = $publicationDate;
+
+        return $this;
+    }
+
+    public function getUpdatedDate(): ?\DateTimeInterface
+    {
+        return $this->updatedDate;
+    }
+
+    public function setUpdatedDate(\DateTimeInterface $updatedDate): self
+    {
+        $this->updatedDate = $updatedDate;
 
         return $this;
     }
 
     public function getUserId(): ?int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(int $user_id): self
+    public function setUserId(int $userId): self
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

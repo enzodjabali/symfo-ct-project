@@ -1,4 +1,17 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+{# 
+    <div class="row">
+        <div class="col">{{ form_row(form.title) }}</div>
+
+
+        <div class="col">{{ form_row(form.description) }}</div>
+    
+        <div class="col" id="some-custom-id">{{ form_row(form.shortdescription) }}</div>
+
+
+        <div width="200" class="col" id="some-custom-id">{{ form_row(form.imageFile) }}</div>
+    </div> #}
+
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -29,6 +29,9 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $article->setUserId($this->getUser()->getId());
+            $article->setPublicationDate(new \DateTime('now'));
+
             $articleRepository->add($article, true);
 
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
@@ -55,8 +58,10 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $articleRepository->add($article, true);
+            $article->setUpdatedDate(new \DateTime('now'));
 
+            $articleRepository->add($article, true);
+            
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 

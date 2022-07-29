@@ -22,7 +22,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         $plainPassword = $form->get('plainPassword')->getData();
-        assert(is_string($plainPassword));
+        assert(is_null($plainPassword) || is_string($plainPassword));
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
