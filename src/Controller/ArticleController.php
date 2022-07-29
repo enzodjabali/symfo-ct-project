@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Service\ArticleService;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,12 +15,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleService $articleService): Response
     {
+        // $article = new Article();
+        // $form = $this->createForm(ArticleType::class, $article);
+
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articleService->getPaginatedArticles(6),
+            // 'form' => $form->createView()
         ]);
     }
+
+    // public function index(UserService $userService): Response
+    // {
+    //     $user = new User();
+    //     $form = $this->createForm(UserType::class, $user);
+
+    //     return $this->render('user/index.html.twig', [
+    //         'users' => $userService->getPaginatedUsers(15),
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ArticleRepository $articleRepository): Response

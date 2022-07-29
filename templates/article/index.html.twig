@@ -3,7 +3,7 @@
 {% block title %}Article index{% endblock %}
 
 {% block body %}
-    <h1>Article index</h1>
+    <h1>Articles</h1>
 
     <div class="row mb-2">
         {% for article in articles %}
@@ -20,7 +20,14 @@
                     <h3 class="mb-0">
                         <a class="text-dark text-decoration-none" href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.title }}</a>
                     </h3>
-                    <div class="mb-1 text-muted">{{ article.publicationDate ? article.publicationDate|date('d/m/Y') : '' }}</div>
+                    <div class="mb-1 text-muted" style="font-size: 1em;">
+                        <p style="font-size: 0.9rem; margin-bottom: 0;">
+                            <i class="bi bi-calendar me-1"></i> 
+                            {{ article.publicationDate ? article.publicationDate|date('d/m/Y') : '' }}
+                            &middot;
+                            <i class="bi bi-person"></i>
+                        </p>
+                    </div>
                     <p class="card-text mb-auto text-wrap" style="width: 23rem;">{{ article.shortdescription }}...</p>
                     <a href="{{ path('app_article_show', {'id': article.id}) }}">Continue reading</a>
                     <a class="btn btn-primary btn-sm" href="{{ path('app_article_edit', {'id': article.id}) }}"><i class="bi bi-pencil-fill"></i></a>
@@ -33,5 +40,11 @@
             <p>no records found</p>
         {% endfor %}
     </div>
-    <a href="{{ path('app_article_new') }}">Create new</a>
+    {% if is_granted("ROLE_ADMIN") %}
+        <a class="btn btn-success" style="position: fixed;bottom: 60px;left: 20px;" href="{{ path('app_article_new') }}">
+            <i class="bi bi-plus-square-fill me-1"></i> 
+                Create new
+        </a>
+    {% endif %}
+    {{ knp_pagination_render(articles) }}
 {% endblock %}
