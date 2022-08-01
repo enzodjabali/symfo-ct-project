@@ -17,25 +17,10 @@ class ArticleController extends AbstractController
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
     public function index(ArticleService $articleService): Response
     {
-        // $article = new Article();
-        // $form = $this->createForm(ArticleType::class, $article);
-
         return $this->render('article/index.html.twig', [
             'articles' => $articleService->getPaginatedArticles(6),
-            // 'form' => $form->createView()
         ]);
     }
-
-    // public function index(UserService $userService): Response
-    // {
-    //     $user = new User();
-    //     $form = $this->createForm(UserType::class, $user);
-
-    //     return $this->render('user/index.html.twig', [
-    //         'users' => $userService->getPaginatedUsers(15),
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ArticleRepository $articleRepository): Response
@@ -45,6 +30,7 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $article->setUserId($this->getUser()->getId());
             $article->setPublicationDate(new \DateTime('now'));
 
