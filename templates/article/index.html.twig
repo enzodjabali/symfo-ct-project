@@ -32,7 +32,7 @@
                     <a href="{{ path('app_article_show', {'id': article.id}) }}">Continue reading</a>
                     <a class="btn btn-primary btn-sm" href="{{ path('app_article_edit', {'id': article.id}) }}"><i class="bi bi-pencil-fill"></i></a>
                     </div>
-                        <div class="card-img-right flex-auto d-none d-md-block" style="width: 200px; height: 250px; background: url('{{ vich_uploader_asset(article, 'imageFile') }}') no-repeat center;background-size: cover;">
+                        <div class="card-img-right flex-auto d-none d-md-block" style="width: 200px; height: 250px; background: url('{{ vich_uploader_asset(article, 'imageFile')|imagine_filter('article_thumbnail') }}') no-repeat center;background-size: cover;">
                     </div>
                 </div>
             </div>

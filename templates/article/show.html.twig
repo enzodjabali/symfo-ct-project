@@ -5,7 +5,7 @@
 {% block body %}
     <h1 class="mb-3">{{ article.title }}</h1>
 
-    <img style="width: 30%;" class="mb-2" src="{{ vich_uploader_asset(article, 'imageFile') }}">
+    <img class="mb-2 img-fluid" src="{{ vich_uploader_asset(article, 'imageFile')|imagine_filter('article') }}">
 
     <p><i class="bi bi-calendar"></i> {{ article.publicationDate ? article.publicationDate|date('d/m/Y') : '' }}</p>
 

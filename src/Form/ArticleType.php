@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -37,10 +38,24 @@ class ArticleType extends AbstractType
                 'required' => false,
                 'download_label' => false,
                 'delete_label' => 'Remove Image',
-                'imagine_pattern' => 'squared_thumbnail_small',
+                'imagine_pattern' => 'article_form',
                 
                 'label_attr' => [
                     'class' => 'form-label mt-4',
+                ],
+
+                'attr' => [
+                    'accept' => 'image/*'
+                ],
+
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ]
+                    ])
                 ]
             ])
             ->add('category', ChoiceType::class, [
@@ -49,8 +64,6 @@ class ArticleType extends AbstractType
                     'News' => 'News',
                 ]
             ])
-            // ->add('publication_date')
-            // ->add('user_id')
         ;
     }
 
