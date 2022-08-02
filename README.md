@@ -44,6 +44,11 @@ Clone the project:
 git clone https://github.com/enzodjabali/symfo-ct-project
 ```
 
+Manage permissions:
+```bash
+sudo chown -R $USER:www-data symfo-ct-project/ && sudo chmod -R g+r+x+w symfo-ct-project/
+```
+
 Create and start containers:
 ```bash
 cd symfo-ct-project/ && docker-compose up
