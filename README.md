@@ -82,7 +82,7 @@ bin/console d:m:m
 Congrats! You can now access your app server at `localhost:8080` 🎉
 
 
-## Go further with database 
+## Access and manage database 🐘
 
 Access PostgreSQL container:
 ```bash
