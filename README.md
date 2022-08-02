@@ -59,6 +59,11 @@ Connect to php container:
 docker exec -it php sh
 ```
 
+Update var/ directory:
+```bash
+chmod -R 777 var/
+```
+
 Install dependencies with composer:
 ```bash
 composer install
@@ -75,3 +80,26 @@ bin/console d:m:m
 ```
 
 Congrats! You can now access your app server at `localhost:8080` 🎉
+
+
+## Go further with database 
+
+Access PostgreSQL container:
+```bash
+docker exec -it symfoctproject_database_1 sh
+```
+
+Connect to database:
+```bash
+psql -U symfony -d app
+```
+
+List users:
+```bash
+SELECT * FROM public.user;
+```
+
+Set user verified:
+```bash
+UPDATE public.user SET verified = true WHERE id = 1;
+```
