@@ -60,17 +60,17 @@ docker exec -it php sh
 ```
 
 Install dependencies with composer:
-# ```bash
+```bash
 composer install
 
 ```
 Create database:
-# ```bash
+```bash
 bin/console d:d:c
 ```
 
 Migrate database:
-# ```bash
+```bash
 bin/console d:m:m
 ```
 
