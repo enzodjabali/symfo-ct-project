@@ -49,17 +49,9 @@ Create and start containers:
 cd symfo-ct-project/ && docker-compose up
 ```
 
-Get id of symfony container:
+Connect to php container:
 ```bash
-docker ps
-```
-
-<img width="550" src="https://cdn.discordapp.com/attachments/774340712585625603/1001254062991355934/container-under-id.jpg" />
-
-
-Connect to container:
-```bash
-docker exec -it f8ff4b2bdac5 /bin/bash
+docker exec -it php sh
 ```
 
 Install dependencies with composer:
@@ -69,16 +61,12 @@ composer install
 ```
 Create database:
 ```bash
-symfony console d:d:c
+bin/console d:d:c
 ```
 
 Migrate database:
 ```bash
-symfony console d:m:m
+bin/console d:m:m
 ```
 
-run symfony server (add `-d` to run it in background):
-```bash
-symfony server:start
-```
-Congrats! You can now access your symfony server at `localhost:9000` 🎉
+Congrats! You can now access your app server at `localhost:8080` 🎉

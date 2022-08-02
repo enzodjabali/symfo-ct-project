@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1 class="mb-3">{{ article.title }}</h1>
+
+    <img class="mb-2 img-fluid" src="{{ vich_uploader_asset(article, 'imageFile')|imagine_filter('article') }}">
+
+    <p><i class="bi bi-calendar"></i> {{ article.publicationDate ? article.publicationDate|date('d/m/Y') : '' }}</p>
+
+    <hr>
+
+    <pre class="fs-6">{{ article.description }}</pre>
+
+    <hr>
+
+    <a class="btn btn-primary" href="{{ path('app_article_index') }}"><i class="bi bi-arrow-left-square-fill me-1"></i> back to list</a>
+
+    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+
+    {{ include('article/_delete_form.html.twig') }}
+{% endblock %}

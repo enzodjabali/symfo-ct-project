@@ -20,6 +20,11 @@ class UserController extends AbstractController
     #[IsGranted('ROLE_SUPER_ADMIN')]
     public function index(UserService $userService): Response
     {
+
+        // $userTest = new User();
+        // $userTest->setId(4);
+        // dd($userTest->getId());
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 

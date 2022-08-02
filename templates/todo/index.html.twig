@@ -73,6 +73,9 @@
     </table>
 
         {% if is_granted("ROLE_ADMIN") %}
-            <a class="btn btn-success" style="position: fixed;bottom: 60px;left: 20px;" href="{{ path('app_todo_new') }}">Create new</a>
+            <a class="btn btn-success" style="position: fixed;bottom: 60px;left: 20px;" href="{{ path('app_todo_new') }}">
+                <i class="bi bi-plus-square-fill me-1"></i> 
+                    Create new
+            </a>
         {% endif %}
 {% endblock %}

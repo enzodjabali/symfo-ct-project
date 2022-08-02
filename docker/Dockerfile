@@ -1,32 +1,25 @@
-FROM php:8.0.13-cli
+FROM php:8.1.5-fpm
 
-RUN apt-get update \
-    &&  apt-get install -y --no-install-recommends \
-        locales apt-utils git libicu-dev g++ libpng-dev libxml2-dev libzip-dev libonig-dev libxslt-dev unzip libpq-dev nodejs npm wget \
-        apt-transport-https lsb-release ca-certificates
+RUN apt update \
+    && apt install -y zlib1g-dev g++ libicu-dev zip libzip-dev zip gnupg2 libpq-dev \
+    && docker-php-ext-install intl opcache pdo \
+    && pecl install apcu \
+    && docker-php-ext-enable apcu \
+    && docker-php-ext-configure zip \
+    && docker-php-ext-install zip \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
 
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen  \
-    &&  echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen \
-    &&  locale-gen
+WORKDIR /var/www
 
-RUN curl -sS https://getcomposer.org/installer | php -- \
-    &&  mv composer.phar /usr/local/bin/composer
+RUN curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y nodejs
 
-RUN curl -sS https://get.symfony.com/cli/installer | bash \
-    &&  mv /root/.symfony/bin/symfony /usr/local/bin
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN docker-php-ext-configure \
-            intl \
-    &&  docker-php-ext-install \
-            pdo pdo_mysql pdo_pgsql opcache intl zip calendar dom mbstring gd xsl
+RUN apt-get update && apt-get upgrade -y && apt-get install -y zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev
 
-RUN pecl install apcu && docker-php-ext-enable apcu
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg && docker-php-ext-install gd
 
-RUN npm install --global yarn
-
-RUN git config --global user.email "you@example.com" \
-    &&  git config --global user.name "Your Name"
-
-CMD tail -f /dev/null
-
-WORKDIR /var/www/html/
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y yarn
