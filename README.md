@@ -103,3 +103,8 @@ Set user verified:
 ```bash
 UPDATE public.user SET verified = true WHERE id = 1;
 ```
+
+Set user SUPER ADMIN:
+```bash
+UPDATE public.user SET roles = '["ROLE_SUPER_ADMIN WHERE"]' WHERE id = 1;
+```
