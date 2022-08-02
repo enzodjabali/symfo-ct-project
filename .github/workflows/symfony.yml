@@ -36,7 +36,7 @@ jobs:
       run: |
         mkdir -p data
         touch data/database.sqlite
-        php bin/console --no-interaction d:d:c
+        php bin/console --no-interaction d:d:c --if-not-exists
         php bin/console --no-interaction d:m:m
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
