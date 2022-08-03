@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/todo')]
+#[IsGranted('ROLE_ADMIN')]
 class TodoController extends AbstractController
 {
     #[Route('', name: 'app_todo_index', methods: ['GET'])]
@@ -25,7 +26,6 @@ class TodoController extends AbstractController
     }
 
     #[Route('/new', name: 'app_todo_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, TodoRepository $todoRepository, MailerService $mailer): Response
     {
         $todo = new Todo();
@@ -70,7 +70,7 @@ class TodoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_todo_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_todo_show', requirements: ['id'=>'\d+'], methods: ['GET'])]
     public function show(Todo $todo): Response
     {
         return $this->render('todo/show.html.twig', [
@@ -78,8 +78,7 @@ class TodoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_todo_edit', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/{id}/edit', name: 'app_todo_edit', requirements: ['id'=>'\d+'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Todo $todo, TodoRepository $todoRepository): Response
     {
         $form = $this->createForm(TodoType::class, $todo);
@@ -96,8 +95,7 @@ class TodoController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_todo_delete', methods: ['POST'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/{id}/delete', name: 'app_todo_delete', requirements: ['id'=>'\d+'], methods: ['POST'])]
     public function delete(Request $request, Todo $todo, TodoRepository $todoRepository): Response
     {
         $todoId = $todo->getId();

@@ -71,7 +71,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         // For example:
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
-        return new RedirectResponse($this->urlGenerator->generate('app_todo_index'));
+        return new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 
     protected function getLoginUrl(Request $request): string

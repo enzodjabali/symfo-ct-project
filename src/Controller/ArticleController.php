@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Service\ArticleService;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/articles')]
 class ArticleController extends AbstractController
 {
-    #[Route('/', name: 'app_article_index', methods: ['GET'])]
+    #[Route('', name: 'app_article_index', methods: ['GET'])]
     public function index(ArticleService $articleService): Response
     {
         return $this->render('article/index.html.twig', [
@@ -23,6 +24,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, ArticleRepository $articleRepository): Response
     {
         $article = new Article();
@@ -45,7 +47,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_article_show', requirements: ['id'=>'\d+'], methods: ['GET'])]
     public function show(Article $article): Response
     {
         return $this->render('article/show.html.twig', [
@@ -53,7 +55,8 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_article_edit', requirements: ['id'=>'\d+'], methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
@@ -73,7 +76,8 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_article_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_article_delete', requirements: ['id'=>'\d+'], methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Article $article, ArticleRepository $articleRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {

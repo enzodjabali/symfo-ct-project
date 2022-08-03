@@ -5,7 +5,7 @@
 {% block body %}
     <h1>User list</h1>
 
-    <table class="table" id="users-table">
+    <table class="table table-striped" id="users-table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -31,12 +31,12 @@
                         <span class="badge text-bg-danger"> Unverified </span>
                     {% endif %}
                 </td>
-
-
                  <td>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#userEdit" data-id="{{ user.id }}">
-                        Edit
-                    </a>
+                     {% if user.roles[0] != 'ROLE_SUPER_ADMIN' or (user.roles[0] == 'ROLE_SUPER_ADMIN' and is_granted("ROLE_SUPER_ADMIN")) %}
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#userEdit" data-id="{{ user.id }}">
+                            Edit
+                        </a>
+                     {% endif %}
                 </td>
             </tr>
             
@@ -57,9 +57,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              
                 {{ include('user/_form.html.twig') }}
-               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -67,28 +65,32 @@
             </div>
         </div>
     </div>
-    
+
+    <div id="toast" class="toast toast-container position-absolute top-0 mt-5 start-50 translate-middle-x" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+        <div id="toast-message" class="toast-body"></div>
+    </div>
+
     <script>
         const userModalObject = new bootstrap.Modal(document.getElementById('userEdit'), {})
         const userModal = document.getElementById('userEdit')
         const formUserEdit = document.getElementsByName("user")[0];
 
         userModal.addEventListener('show.bs.modal', event => {
-
             const linkEdit = event.relatedTarget;
             const userId = linkEdit.getAttribute('data-id');
             const email = document.getElementById("user-"+userId+"-email").textContent;
 
-            document.getElementById("user_email").setAttribute('value', email);
+            document.getElementById("user_email").value = email;
             formUserEdit.action = "users/edit/"+userId;
 
             const userRole = document.getElementById('user-'+userId+'-roles').getAttribute('data-value');
             let userRoleList = document.getElementById("user_roles");
 
-            for (let i = 0; i < userRoleList.options.length; i++) {
-                if (userRoleList.options[i].value == userRole) {
-                    userRoleList.options[i].selected = true;//Set the third item to the current option, i.e. Option 2
-                    console.log('IN');
+            if (userRoleList !== null) {
+                for (let i = 0; i < userRoleList.options.length; i++) {
+                    if (userRoleList.options[i].value == userRole) {
+                        userRoleList.options[i].selected = true;//Set the third item to the current option, i.e. Option 2
+                    }
                 }
             }
 
@@ -98,11 +100,27 @@
 
         formUserEdit.addEventListener('submit', (event) => {
             event.preventDefault();
-            console.log('submit');
-
             const email = document.getElementById("user_email").value;
-            const role = document.getElementById("user_roles").value;
             const verified = document.getElementById("user_verified").checked;
+            const roleEl = document.getElementById("user_roles");
+
+            let role = null;
+
+            let body = JSON.stringify({
+                email: email,
+                verified: verified
+            });
+
+            if (roleEl !== null)
+            {
+                role = roleEl.value;
+
+                body = JSON.stringify({
+                    email: email,
+                    roles: role,
+                    verified: verified
+                });
+            }
 
             // TODO do something here to show user that form is being submitted
             fetch(event.target.action, {
@@ -111,28 +129,49 @@
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    email: email,
-                    roles: role,
-                    verified: verified
-                })
+                body: body
             }).then((resp) => {
-                return resp.json(); // or resp.text() or whatever the server sends
+                if (resp.ok) {
+                    return resp.json(); // or resp.text() or whatever the server sends
+                } else {
+                    return resp.json().then(err => {throw new Error(err.error)})
+                }
+
             }).then((body) => {
                 const userId = /[^/]*$/.exec(formUserEdit.action)[0];
-                console.log(userId);
 
                 refreshTable(userId, email, role, verified);
                 userModalObject.hide();
-            }).catch((error) => {
-               alert(error);
+
+                let toast = document.getElementById('toast');
+                toast.classList.remove("text-bg-danger");
+                toast.classList.add("text-bg-success");
+                document.getElementById("toast-message").innerHTML = "Changes have been successfully saved!";
+
+                let toastObject = new bootstrap.Toast(toast);
+                toastObject.show();
+
+            }).catch((errorMsg) => {
+                userModalObject.hide();
+
+                let toast = document.getElementById('toast');
+                toast.classList.remove("text-bg-success");
+                toast.classList.add("text-bg-danger");
+                document.getElementById("toast-message").innerHTML = errorMsg;
+
+                let toastObject = new bootstrap.Toast(toast);
+                toastObject.show();
             });
         });
 
         function refreshTable(userId, email, role, isUserVerified) {
             document.getElementById("user-"+userId+"-email").innerHTML = email;
-            document.getElementById("user-"+userId+"-roles").innerHTML = "<span class='badge text-bg-primary'>"+role+"</span>";
-            document.getElementById("user-"+userId+"-roles").setAttribute("data-value", role);
+
+            if (role !== null)
+            {
+                document.getElementById("user-"+userId+"-roles").innerHTML = "<span class='badge text-bg-primary'>"+role+"</span>";
+                document.getElementById("user-"+userId+"-roles").setAttribute("data-value", role);
+            }
 
             if (isUserVerified) {
                 document.getElementById("user-"+userId+"-verified").innerHTML = "<span class='badge text-bg-success'> Verified </span>";
