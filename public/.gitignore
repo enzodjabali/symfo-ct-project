@@ -1,4 +1,2 @@
-images/article/*
-media/cache/article/*
-media/cache/article_form/*
-media/cache/article_thumbnail/*
+uploads/*
+media/*

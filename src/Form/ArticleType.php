@@ -59,10 +59,7 @@ class ArticleType extends AbstractType
                 ]
             ])
             ->add('category', ChoiceType::class, [
-                'choices'  => [
-                    'Event' => 'Event',
-                    'News' => 'News',
-                ]
+                'choices'  => array_combine(Article::CATEGORIES, Article::CATEGORIES)
             ])
         ;
     }

@@ -10,31 +10,34 @@
             <div class="col-md-6">
                 <div class="card flex-md-row mb-4 box-shadow h-md-250">
                     <div class="card-body d-flex flex-column align-items-start">
+                        {% if article.category == 'Event' %}
+                            <strong class="d-inline-block mb-2 text-primary">Event</strong>
+                        {% else %}
+                            <strong class="d-inline-block mb-2 text-success">News</strong>
+                        {% endif %}
 
-                    {% if article.category == 'Event' %}
-                        <strong class="d-inline-block mb-2 text-primary">Event</strong>
+                        <h3 class="mb-0">
+                            <a class="text-dark text-decoration-none" href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.title }}</a>
+                        </h3>
+
+                        <div class="mb-1 text-muted" style="font-size: 1em;">
+                            <p style="font-size: 0.9rem; margin-bottom: 0;">
+                                <i class="bi bi-calendar me-1"></i>
+                                {{ article.publicationDate ? article.publicationDate|date('d/m/Y') : '' }}
+                                &middot;
+                                <i class="bi bi-person"></i>
+                                {{ article.user }}
+                            </p>
+                        </div>
+                        <p class="card-text mb-auto text-wrap" style="width: 23rem;">{{ article.shortdescription }}...</p>
+                        <a href="{{ path('app_article_show', {'id': article.id}) }}">Continue reading</a>
+                        <a class="btn btn-primary btn-sm" href="{{ path('app_article_edit', {'id': article.id}) }}"><i class="bi bi-pencil-fill"></i></a>
+                    </div>
+                    {% if vich_uploader_asset(article, 'imageFile') %}
+                        <div class="card-img-right flex-auto d-none d-md-block" style="width: 200px; height: 250px; background: url('{{ vich_uploader_asset(article, 'imageFile')|imagine_filter('article_thumbnail') }}') no-repeat center;background-size: cover;"></div>
                     {% else %}
-                        <strong class="d-inline-block mb-2 text-success">News</strong>
+                        <div class="card-img-right flex-auto d-none d-md-block" style="width: 200px; height: 250px; background: url('{{ asset('images/article/empty.jpg') }}') no-repeat center;background-size: cover;"></div>
                     {% endif %}
-
-                    <h3 class="mb-0">
-                        <a class="text-dark text-decoration-none" href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.title }}</a>
-                    </h3>
-                    <div class="mb-1 text-muted" style="font-size: 1em;">
-                        <p style="font-size: 0.9rem; margin-bottom: 0;">
-                            <i class="bi bi-calendar me-1"></i> 
-                            {{ article.publicationDate ? article.publicationDate|date('d/m/Y') : '' }}
-                            &middot;
-                            <i class="bi bi-person"></i>
-                            {{ article.user }}
-                        </p>
-                    </div>
-                    <p class="card-text mb-auto text-wrap" style="width: 23rem;">{{ article.shortdescription }}...</p>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">Continue reading</a>
-                    <a class="btn btn-primary btn-sm" href="{{ path('app_article_edit', {'id': article.id}) }}"><i class="bi bi-pencil-fill"></i></a>
-                    </div>
-                        <div class="card-img-right flex-auto d-none d-md-block" style="width: 200px; height: 250px; background: url('{{ vich_uploader_asset(article, 'imageFile')|imagine_filter('article_thumbnail') }}') no-repeat center;background-size: cover;">
-                    </div>
                 </div>
             </div>
         {% else %}

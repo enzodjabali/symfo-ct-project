@@ -12,6 +12,8 @@ use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 #[Vich\Uploadable]
 class Article
 {
+    public const CATEGORIES = ["Event", "News"];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
