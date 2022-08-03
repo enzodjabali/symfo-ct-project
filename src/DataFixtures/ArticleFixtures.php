@@ -37,7 +37,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
                 ->setTitle($fakeTitle)
                 ->setShortdescription($fakeShortdescription)
                 ->setDescription($fakeDescription)
-                ->setCategory(Article::CATGORIES[array_rand(Article::CATEGORIES)])
+                ->setCategory(Article::CATEGORIES[array_rand(Article::CATEGORIES)])
                 ->setPublicationDate($date)
                 ->setUser($user)
             ;
