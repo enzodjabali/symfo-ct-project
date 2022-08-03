@@ -64,10 +64,6 @@ Update var/ directory:
 chmod -R 777 var/
 ```
 
-Manage permissions:
-```bash
-sudo chown -R $USER:www-data symfo-ct-project/ && sudo chmod -R g+r+x+w symfo-ct-project/
-```
 Create an `.env.local` file and fill it out
 
 Create database:
@@ -82,6 +78,10 @@ bin/console d:m:m
 
 Congrats! You can now access your app server at `localhost:8080` 🎉
 
+Manage permissions for liip/imagine-bundle cache:
+```bash
+sudo chown -R $USER:www-data symfo-ct-project/ && sudo chmod -R g+r+x+w symfo-ct-project/
+```
 
 ## Access and manage database 🐘
 
