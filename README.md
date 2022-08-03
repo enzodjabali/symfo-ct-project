@@ -44,11 +44,6 @@ Clone the project:
 git clone https://github.com/enzodjabali/symfo-ct-project
 ```
 
-Manage permissions:
-```bash
-sudo chown -R $USER:www-data symfo-ct-project/ && sudo chmod -R g+r+x+w symfo-ct-project/
-```
-
 Create and start containers:
 ```bash
 cd symfo-ct-project/ && docker-compose up
@@ -59,16 +54,22 @@ Connect to php container:
 docker exec -it php sh
 ```
 
+Install dependencies with composer:
+```bash
+composer install
+```
+
 Update var/ directory:
 ```bash
 chmod -R 777 var/
 ```
 
-Install dependencies with composer:
+Manage permissions:
 ```bash
-composer install
-
+sudo chown -R $USER:www-data symfo-ct-project/ && sudo chmod -R g+r+x+w symfo-ct-project/
 ```
+Create an `.env.local` file and fill it out
+
 Create database:
 ```bash
 bin/console d:d:c
