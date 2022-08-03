@@ -33,7 +33,7 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $article->setUserId($this->getUser()->getId());
+            $article->setUser($this->getUser());
             $article->setPublicationDate(new \DateTime('now'));
 
             $articleRepository->add($article, true);

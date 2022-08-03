@@ -39,8 +39,8 @@ class Article
     #[ORM\Column(type: 'date', nullable: true)]
     private ?\DateTimeInterface $updatedDate;
 
-    #[ORM\Column(type: 'integer')]
-    private int $userId;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private User $user;
 
     #[ORM\Column(type: 'string', length: 10)]
     private string $category;
@@ -130,14 +130,14 @@ class Article
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getUser(): User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId(int $userId): self
+    public function setUser(User $user): self
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }

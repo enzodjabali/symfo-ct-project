@@ -25,15 +25,12 @@ class UserFixtures extends Fixture
         $faker = Factory::create('fr_FR');
         assert($faker instanceof Generator);
 
-        // dd($faker, 'email');
-
-        // assert(is_null($faker) || method_exists($faker, 'email'));
-
         $user = (new User())
             ->setEmail('admin@dev.lan')
-            ->setRoles(['ROLE_SUPER_ADMIN']);
+            ->setRoles(['ROLE_SUPER_ADMIN'])
+            ->setVerified(true);
 
-        $hashedPassword = $this->passwordHasher->hashPassword($user, self::PASSWORD);
+        $hashedPassword = $this->passwordHasher->hashPassword($user, UserFixtures::PASSWORD);
         $user->setPassword($hashedPassword);
         
         $manager->persist($user);
@@ -47,7 +44,7 @@ class UserFixtures extends Fixture
                 ->setEmail($fakeEmail)
                 ->setRoles(['ROLE_USER']);
             
-            $hashedPassword = $this->passwordHasher->hashPassword($user, self::PASSWORD);
+            $hashedPassword = $this->passwordHasher->hashPassword($user, UserFixtures::PASSWORD);
             $user->setPassword($hashedPassword);
 
             $manager->persist($user);

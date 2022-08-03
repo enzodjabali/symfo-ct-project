@@ -111,4 +111,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+    public function __toString(): string
+    {
+        $email = $this->getEmail();
+
+        $fullName = explode("@", $email);
+        $fullName = explode(".", $fullName[0]);
+
+        if (isset($fullName[1])) {
+            return ucfirst($fullName[0]) . " " . ucfirst($fullName[1]);
+        } else {
+            return ucfirst($fullName[0]);
+        }
+    }
 }

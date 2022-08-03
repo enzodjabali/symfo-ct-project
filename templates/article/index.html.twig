@@ -26,6 +26,7 @@
                             {{ article.publicationDate ? article.publicationDate|date('d/m/Y') : '' }}
                             &middot;
                             <i class="bi bi-person"></i>
+                            {{ article.user }}
                         </p>
                     </div>
                     <p class="card-text mb-auto text-wrap" style="width: 23rem;">{{ article.shortdescription }}...</p>
