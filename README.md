@@ -65,7 +65,7 @@ Update var/ directory:
 chmod -R 777 var/
 ```
 
-Create an `.env.local` file and fill it out
+Create a copy of the `.env` file then name it `.env.local` and fill it out
 
 Create database:
 ```bash
