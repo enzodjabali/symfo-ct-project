@@ -51,7 +51,9 @@ Create and start containers:
 ```bash
 cd symfo-ct-project/ && docker-compose up
 ```
+<br>
 <b>Create a copy of the `.env` file then name it `.env.local` and fill it out</b>
+<br>
 
 Connect to php container:
 ```bash
@@ -59,23 +61,23 @@ docker exec -it php sh
 ```
 
 Install dependencies with composer:
-```bash
-# composer install
+```sh
+composer install
 ```
 
 Update var/ directory:
-```bash
-# chmod -R 777 var/
+```sh
+chmod -R 777 var/
 ```
 
 Create database:
-```bash
-# bin/console d:d:c
+```sh
+bin/console d:d:c
 ```
 
 Migrate database:
-```bash
-# bin/console d:m:m
+```sh
+bin/console d:m:m
 ```
 
 Congrats! You can now access your app server at `localhost:8080` 🎉
@@ -90,8 +92,8 @@ sudo chown -R $USER:www-data symfo-ct-project/ && sudo chmod -R g+r+x+w symfo-ct
 ```
 
 Load fixtures with faker (in php container):
-```bash
-# bin/console d:f:l
+```sh
+bin/console d:f:l
 ```
 <br>
 
@@ -99,25 +101,27 @@ Load fixtures with faker (in php container):
 
 Access PostgreSQL container:
 ```bash
-docker exec -it symfoctproject_database_1 sh
+docker exec -it symfo-ct-project_database_1 sh
 ```
 
 Connect to database:
-```bash
+```sh
 psql -U symfony -d app
 ```
 
 List users:
-```bash
+```sql
 SELECT * FROM public.user;
 ```
 
 Set user verified:
-```bash
+```sql
 UPDATE public.user SET verified = true WHERE id = 1;
 ```
 
 Set user super admin:
-```bash
+```sql
 UPDATE public.user SET roles = '["ROLE_SUPER_ADMIN"]' WHERE id = 1;
 ```
+<br>
+<i>Thanks and enjoy 👋</i>
