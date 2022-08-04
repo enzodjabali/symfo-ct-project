@@ -11,7 +11,7 @@
 ![MIT license](http://141.94.244.54:1010/license-mit.svg)
 
 Free and open source project developed during my intership at Cloud Temple. It was done with php 8, symfony 6, postgreSQL and docker.
-Please feel free to clone it and play with it as you wish!
+Please, feel free to clone it and play with it as you wish!
 
 ## Deploy project with docker 🐳
 
@@ -79,9 +79,17 @@ bin/console d:m:m
 
 Congrats! You can now access your app server at `localhost:8080` 🎉
 
-Manage permissions for liip/imagine-bundle cache:
+
+## Useful tips 📎
+
+Grant permissions to www-data (might solve cache errors from liip/imagine-bundle):
 ```bash
 sudo chown -R $USER:www-data symfo-ct-project/ && sudo chmod -R g+r+x+w symfo-ct-project/
+```
+
+Load fixtures with faker (in php container):
+```bash
+bin/console d:f:l
 ```
 
 ## Access and manage database 🐘
@@ -106,7 +114,7 @@ Set user verified:
 UPDATE public.user SET verified = true WHERE id = 1;
 ```
 
-Set user SUPER ADMIN:
+Set user super admin:
 ```bash
 UPDATE public.user SET roles = '["ROLE_SUPER_ADMIN"]' WHERE id = 1;
 ```
