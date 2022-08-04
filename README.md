@@ -52,7 +52,9 @@ Create and start containers:
 cd symfo-ct-project/ && docker-compose up
 ```
 <br />
+
 <b>Create a copy of the `.env` file then name it `.env.local` and fill it out</b>
+
 <br />
 
 Connect to php container:
