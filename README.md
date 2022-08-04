@@ -13,6 +13,8 @@
 Free and open source project developed during my intership at Cloud Temple. It was done with php 8, symfony 6, postgreSQL and docker.
 Please, feel free to clone it and play with it as you wish!
 
+<br>
+
 ## Deploy project with docker 🐳
 
 Install docker and docker-compose:
