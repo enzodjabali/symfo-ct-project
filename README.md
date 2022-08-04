@@ -79,6 +79,7 @@ bin/console d:m:m
 
 Congrats! You can now access your app server at `localhost:8080` 🎉
 
+<br>
 
 ## Useful tips 📎
 
@@ -91,6 +92,7 @@ Load fixtures with faker (in php container):
 ```bash
 bin/console d:f:l
 ```
+<br>
 
 ## Access and manage database 🐘
 
