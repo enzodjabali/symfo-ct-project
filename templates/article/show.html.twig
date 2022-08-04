@@ -17,7 +17,7 @@
     </p>
     <hr>
 
-    <p class="fs-6">{{ article.description|nl2br }}</p>
+    <p class="fs-6">{{ article.description|raw }}</p>
 
     {% if article.updatedDate %}
         <span class="small fw-light fst-italic"> Last update : {{ article.updatedDate|date('d/m/Y') }}</span>
