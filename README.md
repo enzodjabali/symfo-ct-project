@@ -51,6 +51,7 @@ Create and start containers:
 ```bash
 cd symfo-ct-project/ && docker-compose up
 ```
+<b>Create a copy of the `.env` file then name it `.env.local` and fill it out</b>
 
 Connect to php container:
 ```bash
@@ -59,24 +60,22 @@ docker exec -it php sh
 
 Install dependencies with composer:
 ```bash
-composer install
+# composer install
 ```
 
 Update var/ directory:
 ```bash
-chmod -R 777 var/
+# chmod -R 777 var/
 ```
-
-Create a copy of the `.env` file then name it `.env.local` and fill it out
 
 Create database:
 ```bash
-bin/console d:d:c
+# bin/console d:d:c
 ```
 
 Migrate database:
 ```bash
-bin/console d:m:m
+# bin/console d:m:m
 ```
 
 Congrats! You can now access your app server at `localhost:8080` 🎉
@@ -92,7 +91,7 @@ sudo chown -R $USER:www-data symfo-ct-project/ && sudo chmod -R g+r+x+w symfo-ct
 
 Load fixtures with faker (in php container):
 ```bash
-bin/console d:f:l
+# bin/console d:f:l
 ```
 <br>
 
