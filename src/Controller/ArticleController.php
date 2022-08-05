@@ -93,6 +93,17 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
     }
 
+    #[Route('/{id}', name: 'app_comment_delete', requirements: ['id'=>'\d+'], methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteComment(Request $request, Comment $comment, CommentRepository $commentRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $commentRepository->remove($comment, true);
+        }
+
+        return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/{id}/edit', name: 'app_article_edit', requirements: ['id'=>'\d+'], methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response

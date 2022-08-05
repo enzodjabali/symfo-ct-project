@@ -6,7 +6,7 @@
     <h1 class="mb-3">
         {{ article.title }}
         {% if is_granted("ROLE_ADMIN") %}
-            <button class="btn btn-primary py-1 px-2" onclick="displayActions()"><i class="bi bi-gear"></i></button>
+            <button class="btn btn-secondary py-1 px-2" onclick="displayActions()"><i class="bi bi-gear"></i></button>
         {% endif %}
     </h1>
 
@@ -58,6 +58,9 @@
                         <div class="card mb-2">
                             <div id="reply-close" class="card-header">
                                 {{ comment.createdAt|date("d/m/Y H:i") }}
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    {{ include('article/_delete_form_comment.html.twig') }}
+                                {% endif %}
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">{{ comment.user }}</h5>
@@ -75,6 +78,9 @@
                         <div class="card ms-5 mb-2">
                             <div class="card-header">
                                 <i class="bi bi-reply"></i> {{ reply.createdAt|date("d/m/Y H:i") }}
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    {{ include('article/_delete_form_comment.html.twig') }}
+                                {% endif %}
                             </div>
                             <div class="card-body bg-light bg-gradient ps-3 pe-3 pt-2 pb-2">
                                 <h5 class="card-title">{{ reply.user }}</h5>
@@ -115,7 +121,10 @@
                 document.getElementById('reply-title').innerHTML = '<i class="bi bi-reply"></i> Reply';
 
                 // Add close reply button
-                parent.querySelector('#reply-close').innerHTML += '<button onclick="closeReply()" class="btn-close position-absolute end-0 me-2" aria-label="Close"></button>';
+                parent.querySelector('#reply-close').innerHTML += '<button onclick="closeReply()" class="btn-close position-absolute end-0 me-2 top-0 mt-2" aria-label="Close"></button>';
+
+                // Remove delete button
+                parent.querySelector('#delete-comment').classList.add('visually-hidden');
 
                 // Add ms-5 margin to form
                 document.getElementById('comment').classList.add('ms-5');
@@ -136,10 +145,10 @@
             let actions = document.getElementById('actions');
 
             if (isOpen) {
-                actions.classList.add("visually-hidden");
+                actions.classList.add('visually-hidden');
                 isOpen = false;
             } else {
-                actions.classList.remove("visually-hidden");
+                actions.classList.remove('visually-hidden');
                 isOpen = true;
             }
         }
