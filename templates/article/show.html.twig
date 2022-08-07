@@ -3,6 +3,18 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div id="toast" class="toast toast-container position-absolute top-0 mt-5 start-50 translate-middle-x text-bg-success" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div id="toast-message" class="toast-body">{{ message }}</div>
+        </div>
+
+        <script>
+            let toast = document.getElementById('toast');
+            let toastObject = new bootstrap.Toast(toast);
+            toastObject.show();
+        </script>
+    {% endfor %}
+
     <h1 class="mb-3">
         {{ article.title }}
         {% if is_granted("ROLE_ADMIN") %}

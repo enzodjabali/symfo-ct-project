@@ -88,7 +88,10 @@ class ArticleController extends AbstractController
 
             $commentRepository->add($comment, true);
 
-            //$this->addFlash('message', 'Comment successfully sent!');
+            $this->addFlash(
+                'success',
+                'Your comment has been successfully added!'
+            );
         }
 
         return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
@@ -105,6 +108,11 @@ class ArticleController extends AbstractController
         if ($this->isCsrfTokenValid($comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }
+
+        $this->addFlash(
+            'success',
+            'The comment has been successfully deleted!'
+        );
 
         return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
     }
