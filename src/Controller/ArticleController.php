@@ -10,6 +10,7 @@ use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,15 +94,19 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}', name: 'app_comment_delete', requirements: ['id'=>'\d+'], methods: ['POST'])]
+    #[Route('/{article_id}/comment/{comment_id}', name: 'app_comment_delete', methods: ['POST'])]
+    #[ParamConverter('article_id', options: ['mapping' => ['id' => 'article']])]
+    #[ParamConverter('comment_id', options: ['mapping' => ['id' => 'comment']])]
+    #[Entity('article', expr: 'repository.find(article_id)')]
+    #[Entity('comment', expr: 'repository.find(comment_id)')]
     #[IsGranted('ROLE_ADMIN')]
-    public function deleteComment(Request $request, Comment $comment, CommentRepository $commentRepository): Response
+    public function deleteComment(Request $request, Article $article, Comment $comment, CommentRepository $commentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid($comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }
 
-        return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_article_show', ['id' => $article->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}/edit', name: 'app_article_edit', requirements: ['id'=>'\d+'], methods: ['GET', 'POST'])]
