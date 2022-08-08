@@ -34,7 +34,7 @@ class Comment
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'replies')]
     private $parent;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class, cascade: ['remove'])]
     private $replies;
 
     public function __construct()
